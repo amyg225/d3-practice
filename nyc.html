@@ -6,6 +6,7 @@
 <meta charset="utf-8">
 <style>
   .district-0, .district-6, .district-12, .district-18, .district-24, .district-30, .district-36, .district-42, .district-48 { fill: #a93e5c; }
+  .yellow { fill: green;}
 </style>
 <body>
   <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -42,6 +43,11 @@
           .attr("class", "district-boundary")
           .attr("class", function(d) {
             return "district-" + d.id;
+          })
+          .on('click', function(d) {
+            // console.log(d);
+            d3.select(this).attr("class", 'yellow');
+            // d3.event.stopPropagation();
           });
 
     });
