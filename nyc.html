@@ -1,14 +1,18 @@
 <!-- https://github.com/dwillis/nyc-maps -->
-<!-- https://github.com/mbostock/d3/wiki/Geo-Paths
- -->
+<!-- https://github.com/mbostock/d3/wiki/Geo-Paths-->
+<!-- http://colorbrewer2.org/ -->
+
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
 <style>
-  .district-0, .district-6, .district-12, .district-18, .district-24, .district-30, .district-36, .district-42, .district-48 { fill: #a93e5c; }
-  .green { fill: green;}
+  .low { fill: #1d91c0;}
+  .medium { fill: #7fcdbb;}
+  .high { fill:  #edf8b1;}
+  .selected { fill: #d7301f;}
+
   .district-label {
-    fill: grey;
+    fill: #081d58;
     fill-opacity: .8;
     font-size: 30px;
     font-weight: 700;
@@ -48,11 +52,18 @@
           .append("path")
           .attr("d", path)
           .attr("class", "district-boundary")
+          .attr('stroke', '#081d58')
           .attr("class", function(d) {
-            return "district-" + d.properties.CounDist;
+            var districtID = d.properties.CounDist;
+            var districtLevel;
+            if (districtID % 2 == 0) { districtLevel = 'low'}
+            else if (districtID % 3 == 0) { districtLevel = 'high'}
+            else { districtLevel = 'medium'}
+            return "district-" + d.properties.CounDist + ' ' + districtLevel;
           })
           .on('click', function(d) {
-            d3.select(this).attr("class", 'green');
+            if(this.classList.contains("selected")) { d3.select(this).classed("selected", false) }
+            else { d3.select(this).classed("selected", true) }
           });
 
 
