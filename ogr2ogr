@@ -1,0 +1,5 @@
+ogr2ogr \
+  -f GeoJSON \
+  -where "ADM0_A3 IN ('GBR', 'IRL')" \
+  council-districts.json \
+  nycc_15b/nycc.shp
