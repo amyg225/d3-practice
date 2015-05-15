@@ -5,7 +5,7 @@
 <html>
 <meta charset="utf-8">
 <style>
-
+  .district-0, .district-6, .district-12, .district-18, .district-24, .district-30, .district-36, .district-42, .district-48 { fill: #a93e5c; }
 </style>
 <body>
   <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -20,15 +20,16 @@
 
     d3.json("city_council.geojson", function(error, city_council) {
       if (error) return console.error(error);
-      console.log(city_council);
+        console.log(city_council);
 
-      //create geo.path object, set the projection to merator bring it to the svg-viewport
-      var path = d3.geo.path()
-          .projection(d3.geo.mercator()
-          .center([-74.3, 40.9]).scale(6193)
-          .scale(300000)
-          .translate([480, 350])
-          .precision(0));
+        //create geo.path object, set the projection to merator bring it to the svg-viewport
+        var path = d3.geo.path()
+            .projection(d3.geo.mercator()
+            .center([-74.3, 40.9]).scale(6193)
+            .scale(300000)
+            .translate([480, 350])
+            .precision(0)
+      );
 
       //draw svg lines of the boundries
       svg.append("g")
@@ -37,7 +38,12 @@
           .data(city_council.features)
           .enter()
           .append("path")
-          .attr("d", path);
+          .attr("d", path)
+          .attr("class", "district-boundary")
+          .attr("class", function(d) {
+            return "district-" + d.id;
+          });
+
     });
   </script>
 </body>
